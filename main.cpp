@@ -1,13 +1,15 @@
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 #define WIDE 800
 #define HIGH 600
 
 
 
-//Game Loop
+
 int main()
 {
+  //declare and create the things
   sf::RenderWindow window(sf::VideoMode(WIDE,HIGH),"Once there was a Square named Timothy");
 
   sf::CircleShape circle(15);
@@ -22,7 +24,9 @@ int main()
 
   double heroSpeed = 0.5;
 
+  int points = 0;
 
+  //Game Loop
   while(window.isOpen())
   {
     //Handle Only Certain Events
@@ -54,6 +58,14 @@ int main()
       hero.move(heroSpeed,0);
     }
 
+    if(hero.getGlobalBounds().intersects(circle.getGlobalBounds()))
+    {
+      std::cout << "Good Job! You found the circle!" << std::endl;
+    }
+    else
+    {
+      std::cout << "I am afraid you are not colliding with the circle." << std::endl;
+    }
 
     window.clear(sf::Color::Black);
 
