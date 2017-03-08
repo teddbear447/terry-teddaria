@@ -3,6 +3,7 @@
 
 #define WIDE 800
 #define HIGH 600
+#define TILESIZE 32
 
 
 
@@ -10,15 +11,22 @@
 int main()
 {
   //declare and create the things
-  sf::RenderWindow window(sf::VideoMode(WIDE,HIGH),"Once there was a Square named Timothy");
+  sf::RenderWindow window(sf::VideoMode(WIDE,HIGH),"Once upon a time there was a Boy named Timothy");
 
   sf::CircleShape circle(15);
   circle.setFillColor(sf::Color::Red);
   circle.setPosition(100,100);
 
-  sf::RectangleShape hero(sf::Vector2f(20,20));
-  hero.setFillColor(sf::Color::Green);
-  hero.setPosition(400,300);
+  sf::Texture hero_texture;
+  if(!hero_texture.loadFromFile("Assets/hero.png"))
+  {
+    std::cout << "Error loading hero texture.";
+  }
+  sf::Sprite hero;
+  hero.setTexture(hero_texture);
+  hero.setScale(sf::Vector2f(2,2));
+
+
 
   int circleDirection = 0;
 
@@ -45,7 +53,7 @@ int main()
     {
       hero.move(0,-heroSpeed);
     }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && hero.getPosition().y < HIGH-hero.getSize().y)
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && hero.getPosition().y < HIGH-TILESIZE)
     {
       hero.move(0,heroSpeed);
     }
@@ -53,19 +61,19 @@ int main()
     {
       hero.move(-heroSpeed,0);
     }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && hero.getPosition().x < WIDE-hero.getSize().x)
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && hero.getPosition().x < WIDE-TILESIZE)
     {
       hero.move(heroSpeed,0);
     }
 
-    if(hero.getGlobalBounds().intersects(circle.getGlobalBounds()))
-    {
-      std::cout << "Good Job! You found the circle!" << std::endl;
-    }
-    else
-    {
-      std::cout << "I am afraid you are not colliding with the circle." << std::endl;
-    }
+    //if(hero.getGlobalBounds().intersects(circle.getGlobalBounds()))
+    //{
+    //  std::cout << "Good Job! You found the circle!" << std::endl;
+    //}
+    //else
+    //{
+    //  std::cout << "I am afraid you are not colliding with the circle." << std::endl;
+    //}
 
     window.clear(sf::Color::Black);
 
